@@ -1,12 +1,27 @@
+#include <condition_variable>
 #include <cstring>
 #include <iostream>
+#include <mutex>
 #include <ostream>
+
+/*在 C++11 标准中，std::string
+的实现必须是线程安全的。这意味着多个线程可以同时读取同一个 std::string
+对象，而不会导致不一致的结果或竞争条件。
+
+然而，需要注意的是，对于 std::string
+对象的写操作并不线程安全。当多个线程同时修改同一个 std::string
+对象时，可能会发生竞争条件，导致未定义的行为或程序崩溃。因此，在多线程环境中修改
+std::string
+对象时，需要采取适当的同步措施，例如使用互斥锁或读写锁来保护修改操作的原子性和顺序性。*/
 
 class mString {
 private:
   char *m_data;
 
   int m_size;
+
+  std::mutex m;
+  std::condition_variable cv;
 
 public:
   mString(const char *s = nullptr) : m_data(nullptr), m_size(0) {
@@ -172,12 +187,16 @@ public:
 
 std::ostream &operator<<(std::ostream &o, mString &other) {
 
+  std::lock_guard<std::mutex> lg(other.m); //保证线程安全
+
   o << other.m_data;
 
   return o;
 }
 
 std::istream &operator>>(std::istream &i, mString &other) {
+
+  std::lock_guard<std::mutex> lg(other.m); //保证线程安全
 
   if (other.m_size != 0) {
     delete[] other.m_data;
