@@ -1,8 +1,10 @@
 #include <condition_variable>
+#include <cstdio>
 #include <cstring>
 #include <iostream>
 #include <mutex>
 #include <ostream>
+#include <string>
 
 /*在 C++11 标准中，std::string
 的实现必须是线程安全的。这意味着多个线程可以同时读取同一个 std::string
@@ -238,6 +240,11 @@ int main() {
 
   std::cout << (s1 == s) << std::endl;
   std::cout << (s1 != s) << std::endl;
+
+  std::string c;
+  std::getline(std::cin, c);
+
+  std::cout << c << std::endl;
 
   std::cin >> s;
 
