@@ -13,8 +13,9 @@
 然而，需要注意的是，对于 std::string
 对象的写操作并不线程安全。当多个线程同时修改同一个 std::string
 对象时，可能会发生竞争条件，导致未定义的行为或程序崩溃。因此，在多线程环境中修改
-std::string
+std::stringE
 对象时，需要采取适当的同步措施，例如使用互斥锁或读写锁来保护修改操作的原子性和顺序性。*/
+
 
 class mString {
 private:
@@ -64,7 +65,9 @@ public:
     return *this;
   }
 
-  char operator[](int index) { return *(m_data + index); }
+  char operator[](const int index) const { return *(m_data + index); }
+
+  char &operator[](const int index) { return *(m_data + index); }
 
   bool operator<(const mString &other) {
     int i;
