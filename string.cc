@@ -42,12 +42,10 @@ public:
     memcpy(m_data, other.m_data, m_size + 1);
   }
 
-  mString(const mString &&other) {
+  mString(mString &&other) {
+    m_data = other.m_data;
     m_size = other.m_size;
-
-    m_data = new char[m_size + 1];
-
-    memcpy(m_data, other.m_data, m_size + 1);
+    other.m_data = nullptr;
   }
 
   mString &operator=(const mString &other) {

@@ -1,5 +1,6 @@
 #include <iostream>
 #include <iterator>
+#include <ostream>
 
 /*
 
@@ -15,6 +16,8 @@ public:
   virtual void init() { std::cout << "A init()" << std::endl; }
 
   virtual void destory() { std::cout << "A destory()" << std::endl; }
+
+  virtual void printf(int a = 250) { std::cout << "a=" << a << std::endl; }
 
   A() {
     init();
@@ -34,6 +37,8 @@ public:
     std::cout << " B()" << std::endl; //构造函数 只能进行静态绑定
   }
 
+  virtual void printf(int b = 360) { std::cout << "b=" << b << std::endl; }
+
   ~B() {
     destory();
 
@@ -41,11 +46,13 @@ public:
   }
 };
 
+void p(A *a) { a->printf(); } //打印 b = 250 采用默认值
+
 int main() {
 
-  A *a = new B();
+  B b;
 
-  delete a;
+  p(&b);
 
   return 0;
 }
