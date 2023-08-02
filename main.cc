@@ -1,23 +1,17 @@
-#include "list.hpp"
-#include <iostream>
 
-template <typename T1, typename T2> auto add(T1 a, T2 b) -> decltype(a + b) {
-  return a + b;
-}
+
+#include <iostream>
+#include <list>
 
 int main() {
 
-  list<int> l;
+  std::list<int> l{1, 2, 3, 4, 5, 6, 7, 8, 9};
 
-  l.insert(1);
-  l.insert(3);
-  l.insert(7);
+  for (auto i : l) {
+    std::cout << i << " ";
+  }
 
-  l.findNode(1);
-
-  l.delNode(1);
-
-  std::cout << l;
+  std::cout << std::endl;
 
   return 0;
 }
